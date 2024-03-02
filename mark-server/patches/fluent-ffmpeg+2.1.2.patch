@@ -1,0 +1,15 @@
+diff --git a/node_modules/fluent-ffmpeg/lib/recipes.js b/node_modules/fluent-ffmpeg/lib/recipes.js
+index 4ee1223..9161948 100644
+--- a/node_modules/fluent-ffmpeg/lib/recipes.js
++++ b/node_modules/fluent-ffmpeg/lib/recipes.js
+@@ -382,8 +382,8 @@ module.exports = function recipes(proto) {
+       for (var i = 0; i < count; i++) {
+         var stream = 'screen' + i;
+         split.outputs.push(stream);
+-
+-        if (i === 0) {
++        // 如果设置了withoutSeekInput参数值为真，则在待执行命令的input参数中不添加"-ss"参数和对应的值，避免出现有的RTSP流在截图时会卡住导致超时的问题（通过命令行运行截图命令后发现卡住问题，Ctrl+C强行结束命令后会出现“could not seek to position xxx”的错误）
++        if (i === 0 && !config.withoutSeekInput) {
+           first = config.timemarks[i];
+           self.seekInput(first);
+         }
